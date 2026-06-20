@@ -1,0 +1,2 @@
+2026-06-13 12:52:24:5224 [ERROR]: Unable to connect to the database: Access denied for user 'metroapi1_user'@'localhost' (using password: YES)
+2026-06-15 06:25:19:2519 [ERROR]: Unable to create/verify database: Access denied for user 'metroapi1_user'@'localhost' (using password: YES)

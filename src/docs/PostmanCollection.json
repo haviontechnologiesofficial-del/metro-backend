@@ -1,0 +1,436 @@
+{
+  "info": {
+    "_postman_id": "8f830d17-91f8-450f-a36c-9411624b58e7",
+    "name": "Metro Mobile Shop ERP API",
+    "description": "API collection for Mobile Shop Management ERP Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth Module",
+      "item": [
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseJson = pm.response.json();",
+                  "if (responseJson.success && responseJson.data.accessToken) {",
+                  "    pm.environment.set(\"token\", responseJson.data.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "profile"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shop_name\": \"Metro Mobile Hub\",\n  \"phone\": \"9999988888\",\n  \"address\": \"New Market Crossing, Mall Road\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "profile"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory & Base Modules",
+      "item": [
+        {
+          "name": "Categories",
+          "item": [
+            {
+              "name": "Create Category",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_name\": \"Smartphones\",\n  \"description\": \"Android and iOS high-end smartphones\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Categories",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/categories?page=1&limit=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "10" }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brands",
+          "item": [
+            {
+              "name": "Create Brand",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"brand_name\": \"Google\",\n  \"description\": \"Google Pixel Devices\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/brands",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "brands"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Create Product (Mobile)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Google Pixel 8 Pro\",\n  \"sku_code\": \"PIX8PRO-256-BLK\",\n  \"phone_condition\": \"new\",\n  \"initial_stock_qty\": 5,\n  \"cost_price\": 70000.00,\n  \"selling_price\": 85000.00,\n  \"color\": \"Obsidian\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/products?search=Pixel&page=1&limit=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products"
+                  ],
+                  "query": [
+                    { "key": "search", "value": "Pixel" },
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "10" }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bills & Sales Modules",
+      "item": [
+        {
+          "name": "Accessory Bills",
+          "item": [
+            {
+              "name": "Create Accessory Bill (Final)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_name\": \"John Doe\",\n  \"phone\": \"9876543211\",\n  \"type\": \"myself\",\n  \"cash_amount\": 1500.00,\n  \"online_amount\": 500.00,\n  \"bill_status\": \"final\",\n  \"items\": [\n    {\n      \"product_name\": \"USB-C Charger\",\n      \"qty\": 2,\n      \"unit_price\": 1000.00\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/accessory-bills",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accessory-bills"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mobile Sales",
+          "item": [
+            {
+              "name": "Finalize Mobile Sale",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_name\": \"Alice Carter\",\n  \"phone\": \"9123456789\",\n  \"type\": \"retail\",\n  \"cash_amount\": 85000.00,\n  \"online_amount\": 0.00,\n  \"status\": \"final\",\n  \"items\": [\n    {\n      \"product_name\": \"Google Pixel 8 Pro\",\n      \"qty\": 1,\n      \"unit_price\": 85000.00,\n      \"imei_1\": \"357283948572019\",\n      \"imei_2\": \"357283948572020\"\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/mobile-sales",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "mobile-sales"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Service Bills",
+          "item": [
+            {
+              "name": "Create Service Bill (Outsourced)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_name\": \"Bob Vance\",\n  \"phone\": \"9876543233\",\n  \"service_details\": \"Screen replacement\",\n  \"work_mode\": \"outsourced\",\n  \"total_amount\": 5000.00,\n  \"supplier_id\": \"{{supplier_uuid}}\",\n  \"supplier_amount\": 3000.00,\n  \"cash_amount\": 5000.00,\n  \"online_amount\": 0.00,\n  \"bill_status\": \"final\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/service-bills",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "service-bills"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dashboard & Analytical Reports",
+      "item": [
+        {
+          "name": "Get Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/dashboard/summary?period=monthly",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "summary"
+              ],
+              "query": [
+                { "key": "period", "value": "monthly" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Profit Sheet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/dashboard/profit-sheet?period=monthly",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "profit-sheet"
+              ],
+              "query": [
+                { "key": "period", "value": "monthly" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Export Sales Excel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reports/sales?export=excel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reports",
+                "sales"
+              ],
+              "query": [
+                { "key": "export", "value": "excel" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
