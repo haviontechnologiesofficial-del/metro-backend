@@ -82,6 +82,10 @@ const MobileSale = sequelize.define('MobileSale', {
   notes: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  warranty: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   tableName: 'mobile_sales',

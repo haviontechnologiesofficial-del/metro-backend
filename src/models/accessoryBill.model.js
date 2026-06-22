@@ -86,6 +86,10 @@ const AccessoryBill = sequelize.define('AccessoryBill', {
   notes: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  warranty: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   tableName: 'accessory_bills',

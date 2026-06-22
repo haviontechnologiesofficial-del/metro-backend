@@ -65,6 +65,7 @@ class BaseRepository {
         let isHasMany = false;
 
         if (inc.as === 'category') { childTable = 'categories'; childKey = 'id'; parentKey = 'category_id'; }
+        else if (inc.as === 'subcategory') { childTable = 'subcategories'; childKey = 'id'; parentKey = 'subcategory_id'; }
         else if (inc.as === 'brand') { childTable = 'brands'; childKey = 'id'; parentKey = 'brand_id'; }
         else if (inc.as === 'supplier') { childTable = 'suppliers'; childKey = 'id'; parentKey = 'supplier_id'; }
         else if (inc.as === 'user') { childTable = 'users'; childKey = 'id'; parentKey = 'performed_by'; }
@@ -184,6 +185,7 @@ class BaseRepository {
           let isHasMany = false;
 
           if (inc.as === 'category') { childTable = 'categories'; childKey = 'id'; parentKey = 'category_id'; }
+          else if (inc.as === 'subcategory') { childTable = 'subcategories'; childKey = 'id'; parentKey = 'subcategory_id'; }
           else if (inc.as === 'brand') { childTable = 'brands'; childKey = 'id'; parentKey = 'brand_id'; }
           else if (inc.as === 'supplier') { childTable = 'suppliers'; childKey = 'id'; parentKey = 'supplier_id'; }
           else if (inc.as === 'user') { childTable = 'users'; childKey = 'id'; parentKey = 'performed_by'; }
@@ -266,6 +268,7 @@ class BaseRepository {
       let parentKey = 'id';
 
       if (inc.as === 'category') { childTable = 'categories'; childKey = 'id'; parentKey = 'category_id'; }
+      else if (inc.as === 'subcategory') { childTable = 'subcategories'; childKey = 'id'; parentKey = 'subcategory_id'; }
       else if (inc.as === 'brand') { childTable = 'brands'; childKey = 'id'; parentKey = 'brand_id'; }
       else if (inc.as === 'supplier') { childTable = 'suppliers'; childKey = 'id'; parentKey = 'supplier_id'; }
       else if (inc.as === 'user') { childTable = 'users'; childKey = 'id'; parentKey = 'performed_by'; }

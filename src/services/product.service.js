@@ -43,6 +43,7 @@ class ProductService extends BaseService {
   async findById(id, options = {}) {
     const includes = options.includes || [
       { model: { tableName: 'categories' }, as: 'category' },
+      { model: { tableName: 'subcategories' }, as: 'subcategory' },
       { model: { tableName: 'brands' }, as: 'brand' },
       { model: { tableName: 'suppliers' }, as: 'supplier' }
     ];
@@ -52,6 +53,7 @@ class ProductService extends BaseService {
   async list(options = {}) {
     const includes = options.includes || [
       { model: { tableName: 'categories' }, as: 'category' },
+      { model: { tableName: 'subcategories' }, as: 'subcategory' },
       { model: { tableName: 'brands' }, as: 'brand' },
       { model: { tableName: 'suppliers' }, as: 'supplier' }
     ];

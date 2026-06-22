@@ -10,6 +10,7 @@ const updateProductRules = [
   body('name').optional({ values: 'falsy' }).isString(),
   body('sku_code').optional({ values: 'falsy' }).isString(),
   body('category_id').optional({ values: 'falsy' }).isUUID().withMessage('Category ID must be a valid UUID'),
+  body('subcategory_id').optional({ values: 'falsy' }).isUUID().withMessage('Subcategory ID must be a valid UUID'),
   body('brand_id').optional({ values: 'falsy' }).isUUID().withMessage('Brand ID must be a valid UUID'),
   body('phone_condition').optional({ values: 'falsy' }).isString(),
   body('supplier_id').optional({ values: 'falsy' }).isUUID().withMessage('Supplier ID must be a valid UUID'),

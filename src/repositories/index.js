@@ -4,6 +4,7 @@ const BaseRepository = require('./base.repository');
 const TABLES = {
   user: 'users',
   category: 'categories',
+  subcategory: 'subcategories',
   brand: 'brands',
   supplier: 'suppliers',
   product: 'products',
@@ -37,6 +38,12 @@ class UserRepository extends BaseRepository {
 class CategoryRepository extends BaseRepository {
   constructor() {
     super(TABLES.category);
+  }
+}
+
+class SubcategoryRepository extends BaseRepository {
+  constructor() {
+    super(TABLES.subcategory);
   }
 }
 
@@ -150,6 +157,7 @@ class SupplierTransactionRepository extends BaseRepository {
 module.exports = {
   userRepository: new UserRepository(),
   categoryRepository: new CategoryRepository(),
+  subcategoryRepository: new SubcategoryRepository(),
   brandRepository: new BrandRepository(),
   supplierRepository: new SupplierRepository(),
   productRepository: new ProductRepository(),

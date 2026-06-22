@@ -65,6 +65,10 @@ const ServiceBill = sequelize.define('ServiceBill', {
   notes: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  warranty: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   tableName: 'service_bills',

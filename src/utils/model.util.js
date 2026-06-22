@@ -35,6 +35,11 @@ function buildJoins(includeList) {
       childKey = 'id';
       parentKey = 'category_id';
       childAttrs = inc.attributes ? inc.attributes.join(', ') : '*';
+    } else if (inc.as === 'subcategory') {
+      childTable = 'subcategories';
+      childKey = 'id';
+      parentKey = 'subcategory_id';
+      childAttrs = inc.attributes ? inc.attributes.join(', ') : '*';
     } else if (inc.as === 'brand') {
       childTable = 'brands';
       childKey = 'id';

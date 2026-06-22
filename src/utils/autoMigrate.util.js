@@ -33,6 +33,19 @@ const autoMigrate = async () => {
       deleted_at DATETIME DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`,
 
+    `CREATE TABLE IF NOT EXISTS subcategories (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      subcategory_name VARCHAR(255) NOT NULL,
+      category_id CHAR(36) NOT NULL,
+      description TEXT DEFAULT NULL,
+      status VARCHAR(255) NOT NULL DEFAULT 'active',
+      created_at DATETIME NOT NULL,
+      updated_at DATETIME NOT NULL,
+      deleted_at DATETIME DEFAULT NULL,
+      INDEX idx_subcategories_category (category_id),
+      CONSTRAINT fk_subcategories_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`,
+
     `CREATE TABLE IF NOT EXISTS brands (
       id CHAR(36) NOT NULL PRIMARY KEY,
       brand_name VARCHAR(255) NOT NULL,
@@ -103,6 +116,7 @@ const autoMigrate = async () => {
       emi_amount DECIMAL(12,2) NOT NULL DEFAULT 0.00,
       bill_status VARCHAR(255) NOT NULL DEFAULT 'draft',
       notes TEXT DEFAULT NULL,
+      warranty VARCHAR(255) DEFAULT NULL,
       created_at DATETIME NOT NULL,
       updated_at DATETIME NOT NULL,
       deleted_at DATETIME DEFAULT NULL
@@ -147,6 +161,7 @@ const autoMigrate = async () => {
       emi_amount DECIMAL(12,2) NOT NULL DEFAULT 0.00,
       status VARCHAR(255) NOT NULL DEFAULT 'final',
       notes TEXT DEFAULT NULL,
+      warranty VARCHAR(255) DEFAULT NULL,
       created_at DATETIME NOT NULL,
       updated_at DATETIME NOT NULL,
       deleted_at DATETIME DEFAULT NULL
@@ -191,6 +206,7 @@ const autoMigrate = async () => {
       online_amount DECIMAL(12,2) NOT NULL DEFAULT 0.00,
       bill_status VARCHAR(255) NOT NULL DEFAULT 'draft',
       notes TEXT DEFAULT NULL,
+      warranty VARCHAR(255) DEFAULT NULL,
       created_at DATETIME NOT NULL,
       updated_at DATETIME NOT NULL,
       deleted_at DATETIME DEFAULT NULL,
@@ -356,6 +372,87 @@ const autoMigrate = async () => {
         throw error;
       }
     }
+  }
+
+  // Ensure existing tables have subcategory_id columns
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM products LIKE 'subcategory_id'");
+    if (columns.length === 0) {
+      logger.info('Adding subcategory_id column to products table...');
+      await db.pool.execute(`
+        ALTER TABLE products 
+        ADD COLUMN subcategory_id CHAR(36) DEFAULT NULL AFTER category_id,
+        ADD INDEX idx_products_subcategory (subcategory_id),
+        ADD CONSTRAINT fk_products_subcategory FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL ON UPDATE CASCADE
+      `);
+      logger.info('subcategory_id column added to products table.');
+    }
+  } catch (error) {
+    logger.error('Error adding subcategory_id column to products table:', error);
+  }
+
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM mobile_sale_items LIKE 'subcategory_id'");
+    if (columns.length === 0) {
+      logger.info('Adding subcategory_id column to mobile_sale_items table...');
+      await db.pool.execute(`
+        ALTER TABLE mobile_sale_items 
+        ADD COLUMN subcategory_id CHAR(36) DEFAULT NULL AFTER category_id,
+        ADD INDEX idx_sale_items_subcategory (subcategory_id),
+        ADD CONSTRAINT fk_sale_items_subcategory FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL ON UPDATE CASCADE
+      `);
+      logger.info('subcategory_id column added to mobile_sale_items.');
+    }
+  } catch (error) {
+    logger.error('Error adding subcategory_id column to mobile_sale_items:', error);
+  }
+
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM accessory_bill_items LIKE 'subcategory_id'");
+    if (columns.length === 0) {
+      logger.info('Adding subcategory_id column to accessory_bill_items table...');
+      await db.pool.execute(`
+        ALTER TABLE accessory_bill_items 
+        ADD COLUMN subcategory_id CHAR(36) DEFAULT NULL AFTER category_id,
+        ADD INDEX idx_accessory_items_subcategory (subcategory_id),
+        ADD CONSTRAINT fk_accessory_items_subcategory FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL ON UPDATE CASCADE
+      `);
+      logger.info('subcategory_id column added to accessory_bill_items.');
+    }
+  } catch (error) {
+    logger.error('Error adding subcategory_id column to accessory_bill_items:', error);
+  }
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM mobile_sales LIKE 'warranty'");
+    if (columns.length === 0) {
+      logger.info('Adding warranty column to mobile_sales table...');
+      await db.pool.execute("ALTER TABLE mobile_sales ADD COLUMN warranty VARCHAR(255) DEFAULT NULL AFTER notes");
+      logger.info('warranty column added to mobile_sales.');
+    }
+  } catch (error) {
+    logger.error('Error adding warranty column to mobile_sales:', error);
+  }
+
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM accessory_bills LIKE 'warranty'");
+    if (columns.length === 0) {
+      logger.info('Adding warranty column to accessory_bills table...');
+      await db.pool.execute("ALTER TABLE accessory_bills ADD COLUMN warranty VARCHAR(255) DEFAULT NULL AFTER notes");
+      logger.info('warranty column added to accessory_bills.');
+    }
+  } catch (error) {
+    logger.error('Error adding warranty column to accessory_bills:', error);
+  }
+
+  try {
+    const [columns] = await db.pool.execute("SHOW COLUMNS FROM service_bills LIKE 'warranty'");
+    if (columns.length === 0) {
+      logger.info('Adding warranty column to service_bills table...');
+      await db.pool.execute("ALTER TABLE service_bills ADD COLUMN warranty VARCHAR(255) DEFAULT NULL AFTER notes");
+      logger.info('warranty column added to service_bills.');
+    }
+  } catch (error) {
+    logger.error('Error adding warranty column to service_bills:', error);
   }
 
   logger.info('Auto-migration completed successfully.');

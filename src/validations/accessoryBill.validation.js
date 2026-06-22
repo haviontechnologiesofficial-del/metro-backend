@@ -15,7 +15,7 @@ const createAccessoryBillRules = [
     .optional()
     .isArray().withMessage('Items must be an array'),
   body('items.*.product_id')
-    .optional()
+    .optional({ nullable: true })
     .isUUID().withMessage('Product ID must be a valid UUID'),
   body('items.*.qty')
     .optional()

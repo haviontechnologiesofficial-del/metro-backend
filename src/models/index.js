@@ -4,6 +4,7 @@ const { createModel } = require('../utils/model.util');
 const TABLES = {
   User: 'users',
   Category: 'categories',
+  Subcategory: 'subcategories',
   Brand: 'brands',
   Supplier: 'suppliers',
   Product: 'products',
@@ -34,6 +35,7 @@ module.exports = {
   // For backward compatibility - code that does require('../models') gets the models directly
   User: models.User,
   Category: models.Category,
+  Subcategory: models.Subcategory,
   Brand: models.Brand,
   Supplier: models.Supplier,
   Product: models.Product,

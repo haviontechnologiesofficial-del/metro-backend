@@ -94,6 +94,7 @@ app.use((req, res, next) => {
 // 4. Routes Registry
 const authRoutes = require('./routes/auth.routes');
 const categoryRoutes = require('./routes/category.routes');
+const subcategoryRoutes = require('./routes/subcategory.routes');
 const brandRoutes = require('./routes/brand.routes');
 const supplierRoutes = require('./routes/supplier.routes');
 const productRoutes = require('./routes/product.routes');
@@ -112,6 +113,7 @@ const openBalanceRoutes = require('./routes/openBalance.routes');
 // API Versioning
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoryRoutes);
+app.use('/api/v1/subcategories', subcategoryRoutes);
 app.use('/api/v1/brands', brandRoutes);
 app.use('/api/v1/suppliers', supplierRoutes);
 app.use('/api/v1/products', productRoutes);
