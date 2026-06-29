@@ -322,7 +322,7 @@ class DashboardService {
 
     // Mobile Sales
     const mobSales = await db.query(
-      `SELECT ms.*, msi.*, c.category_name, b.brand_name
+      `SELECT ms.created_at AS sale_created_at, ms.*, msi.*, c.category_name, b.brand_name
        FROM mobile_sales ms
        LEFT JOIN mobile_sale_items msi ON ms.id = msi.mobile_sale_id AND msi.deleted_at IS NULL
        LEFT JOIN categories c ON msi.category_id = c.id AND c.deleted_at IS NULL
@@ -337,7 +337,7 @@ class DashboardService {
     if (dateFilter) { sf2 = ' AND ab.created_at >= ? AND ab.created_at <= ?'; sp2 = [dateFilter.start, dateFilter.end]; }
 
     const accSales = await db.query(
-      `SELECT ab.*, abi.*, c.category_name, b.brand_name
+      `SELECT ab.created_at AS bill_created_at, ab.*, abi.*, c.category_name, b.brand_name
        FROM accessory_bills ab
        LEFT JOIN accessory_bill_items abi ON ab.id = abi.accessory_bill_id AND abi.deleted_at IS NULL
        LEFT JOIN categories c ON abi.category_id = c.id AND c.deleted_at IS NULL
@@ -362,7 +362,7 @@ class DashboardService {
 
         saleLines.push({
           id: `${row.id}_ln_${row.category_id || '0'}`,
-          at: row.created_at,
+          at: row.sale_created_at || row.created_at,
           productName: row.product_name,
           qty: parseInt(row.qty || 1, 10),
           amount: parseFloat(row.total || 0),
@@ -385,7 +385,7 @@ class DashboardService {
 
         saleLines.push({
           id: `${row.id}_ln_${row.category_id || '0'}`,
-          at: row.created_at,
+          at: row.bill_created_at || row.created_at,
           productName: row.product_name,
           qty: parseInt(row.qty || 1, 10),
           amount: parseFloat(row.total || 0),
@@ -440,7 +440,7 @@ class DashboardService {
       const label = exp.notes || catLabel || 'Shop Expense';
       return {
         id: exp.id,
-        at: exp.date,
+        at: exp.created_at || exp.date,
         source: exp.expense_type === 'exchange' ? 'sale_line' : 'shop',
         label,
         amount: parseFloat(exp.amount)

@@ -30,10 +30,10 @@ class AccessoryBillService extends BaseService {
       const fSubtotal = calculatedSubtotal;
       const fGst = parseFloat(data.gst || 0);
       const fDiscount = parseFloat(data.discount || 0);
-      const fGrandTotal = (fSubtotal + fGst) - fDiscount;
+      const fGrandTotal = fSubtotal - fDiscount;
 
       data.subtotal = fSubtotal;
-      data.total_before_discount = fSubtotal + fGst;
+      data.total_before_discount = fSubtotal;
       data.grand_total = fGrandTotal;
 
       // Handle split payments
@@ -174,10 +174,10 @@ class AccessoryBillService extends BaseService {
       const fSubtotal = items.length > 0 ? calculatedSubtotal : parseFloat(data.subtotal || bill.subtotal);
       const fGst = parseFloat(data.gst !== undefined ? data.gst : bill.gst);
       const fDiscount = parseFloat(data.discount !== undefined ? data.discount : bill.discount);
-      const fGrandTotal = (fSubtotal + fGst) - fDiscount;
+      const fGrandTotal = fSubtotal - fDiscount;
 
       data.subtotal = fSubtotal;
-      data.total_before_discount = fSubtotal + fGst;
+      data.total_before_discount = fSubtotal;
       data.grand_total = fGrandTotal;
 
       data.cash_amount = parseFloat(data.cash_amount !== undefined ? data.cash_amount : bill.cash_amount);

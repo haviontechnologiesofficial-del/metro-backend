@@ -12,18 +12,17 @@ class InvoiceHelper {
       prefix = 'MOB';
       tableName = 'mobile_sales';
     } else if (type === 'service') {
-      prefix = 'SRV';
+      prefix = 'SER';
       tableName = 'service_bills';
     } else {
       throw new Error(`Invalid invoice type: ${type}`);
     }
 
-    const todayStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
-    const searchPrefix = `${prefix}-${todayStr}-`;
+    const searchPrefix = `${prefix}-`;
 
     const query = transaction ? transaction.query : db.query;
     const rows = await query(
-      `SELECT invoice_no FROM ${tableName} WHERE invoice_no LIKE ? ORDER BY invoice_no DESC LIMIT 1`,
+      `SELECT invoice_no FROM ${tableName} WHERE invoice_no LIKE ? ORDER BY created_at DESC LIMIT 1`,
       [`${searchPrefix}%`]
     );
 

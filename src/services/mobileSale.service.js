@@ -28,10 +28,10 @@ class MobileSaleService extends BaseService {
       const fSubtotal = calculatedSubtotal;
       const fGst = parseFloat(data.gst || 0);
       const fDiscount = parseFloat(data.discount || 0);
-      const fGrandTotal = (fSubtotal + fGst) - fDiscount;
+      const fGrandTotal = fSubtotal - fDiscount;
 
       data.subtotal = fSubtotal;
-      data.total_before_discount = fSubtotal + fGst;
+      data.total_before_discount = fSubtotal;
       data.grand_total = fGrandTotal;
 
       const fCash = parseFloat(data.cash_amount || 0);
@@ -151,8 +151,8 @@ class MobileSaleService extends BaseService {
       data.subtotal = items.length > 0 ? calculatedSubtotal : parseFloat(data.subtotal || sale.subtotal);
       data.gst = parseFloat(data.gst !== undefined ? data.gst : sale.gst);
       data.discount = parseFloat(data.discount !== undefined ? data.discount : sale.discount);
-      data.total_before_discount = parseFloat(data.subtotal) + parseFloat(data.gst);
-      data.grand_total = (parseFloat(data.subtotal) + parseFloat(data.gst)) - parseFloat(data.discount);
+      data.total_before_discount = parseFloat(data.subtotal);
+      data.grand_total = parseFloat(data.subtotal) - parseFloat(data.discount);
       data.cash_amount = parseFloat(data.cash_amount !== undefined ? data.cash_amount : sale.cash_amount);
       data.online_amount = parseFloat(data.online_amount !== undefined ? data.online_amount : sale.online_amount);
       data.initial_payment = parseFloat(data.cash_amount) + parseFloat(data.online_amount);
